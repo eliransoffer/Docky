@@ -4,42 +4,13 @@ A modular RAG (Retrieval-Augmented Generation) system that maintains conversatio
 
 ## Features
 
-- **📄 PDF Document Processing**: Load and chunk PDF documents for retrieval
-- **🧠 Conversation Memory**: Maintains conversation history with automatic summarization
-- **🔍 Intelligent Retrieval**: Uses Chroma vector database for semantic search
-- **💬 Context-Aware Responses**: Builds on previous conversation exchanges
-- **⚙️ Modular Architecture**: Clean separation of concerns for easy maintenance
-- **🔧 Configurable**: Easily adjustable parameters for different use cases
+- **PDF Document Processing**: Load and chunk PDF documents for retrieval
+- **Conversation Memory**: Maintains conversation history with automatic summarization
+- **Intelligent Retrieval**: Uses Chroma vector database for semantic search
+- **Context-Aware Responses**: Builds on previous conversation exchanges
+- **Modular Architecture**: Clean separation of concerns for easy maintenance
+- **Configurable**: Easily adjustable parameters for different use cases
 
-## Project Structure
-
-```
-rag_system/
-├── __init__.py
-├── main.py                      # Entry point
-├── requirements.txt
-├── README.md
-├── config/
-│   ├── __init__.py
-│   └── settings.py              # Configuration management
-├── memory/
-│   ├── __init__.py
-│   ├── conversation_manager.py  # Conversation history management
-│   └── token_counter.py         # Token counting utilities
-├── document_processing/
-│   ├── __init__.py
-│   ├── loader.py               # PDF loading and chunking
-│   └── vector_store.py         # Vector store management
-├── chains/
-│   ├── __init__.py
-│   └── rag_chain.py            # RAG chain and prompt templates
-├── core/
-│   ├── __init__.py
-│   └── rag_system.py           # Main RAG system orchestration
-└── cli/
-    ├── __init__.py
-    └── interactive.py          # Interactive CLI interface
-```
 
 ## Installation
 
