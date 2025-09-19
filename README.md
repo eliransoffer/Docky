@@ -100,11 +100,6 @@ class RAGConfig:
 - Proper citation format with page numbers
 - Handles both memory-aware and basic question answering
 
-### 4. Interactive Interface
-- Clean CLI with helpful commands
-- Real-time conversation statistics
-- Easy access to system information
-- Graceful error handling
 
 ## Example Conversation
 
@@ -143,7 +138,6 @@ class RAGConfig:
 ### Flexibility
 - Easy to swap implementations
 - Configurable through settings
-- Multiple interface options (CLI, could add web/API)
 - Extensible for new document types or models
 
 ## Troubleshooting
@@ -164,7 +158,7 @@ class RAGConfig:
 
 3. **Memory Warnings**
    ```
-   📝 Conversation getting long, creating summary...
+   Conversation getting long, creating summary...
    ```
    **Info**: This is normal behavior when conversation exceeds token limit
 
@@ -179,9 +173,8 @@ class RAGConfig:
 To extend the system:
 
 1. **Add new document types**: Extend `DocumentLoader` class
-2. **Add new interfaces**: Create new modules in `cli/` or add `web/` directory
-3. **Modify memory behavior**: Customize `ConversationManager` class
-4. **Change prompts**: Modify templates in `RAGChainBuilder`
+2. **Modify memory behavior**: Customize `ConversationManager` class
+3. **Change prompts**: Modify templates in `RAGChainBuilder`
 
 ## Dependencies
 
