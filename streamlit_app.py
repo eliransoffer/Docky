@@ -6,6 +6,8 @@ import time
 import asyncio
 import threading
 import hashlib
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 from config.settings import RAGConfig
 from core.rag_system import RAGWithMemory
