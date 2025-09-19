@@ -1,0 +1,44 @@
+# config/settings.py
+import os
+from dotenv import load_dotenv
+from dataclasses import dataclass
+from typing import Optional
+
+# Load environment variables
+load_dotenv()
+
+@dataclass
+class RAGConfig:
+    """Configuration for RAG system"""
+    # Model settings
+    embedding_model: str = "models/gemini-embedding-001"
+    llm_model: str = "gemini-2.5-flash"
+    
+    # Document processing
+    chunk_size: int = 2000
+    chunk_overlap: int = 400
+    
+    # Memory settings
+    memory_tokens: int = 500
+    max_recent_exchanges: int = 3
+    
+    # Vector store
+    collection_name: str = "rag_memory"
+    persist_directory: str = "./chroma_db"
+    retrieval_k: int = 6
+    
+    # API keys (from environment)
+    google_api_key: Optional[str] = None
+    
+    def __post_init__(self):
+        # Load API key from environment if not provided
+        if self.google_api_key is None:
+            self.google_api_key = os.getenv("GOOGLE_API_KEY")
+        
+        # Validate required settings
+        if not self.google_api_key:
+            raise ValueError("GOOGLE_API_KEY environment variable is required")
+
+def get_config() -> RAGConfig:
+    """Get default configuration"""
+    return RAGConfig()
