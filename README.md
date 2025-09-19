@@ -24,7 +24,16 @@ A modular RAG (Retrieval-Augmented Generation) system that maintains conversatio
 3. **Set up environment variables:**
    Create a `.env` file in the project root:
    ```bash
+   
    GOOGLE_API_KEY=your_google_api_key_here
+   LANGCHAIN_TRACING_V2="true"
+   LANGCHAIN_ENDPOINT="https://eu.smith.langchain.com/api"
+   LANGCHAIN_API_KEY="your_langchain_api_key_here"
+   LANGCHAIN_PROJECT="Docky_api"
+   LANGSMITH_TRACING="true"
+   LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
+   LANGSMITH_API_KEY="your_langsmith_api_key_here"
+   LANGSMITH_PROJECT="docky_api"
    ```
 
 ## Usage
@@ -47,18 +56,6 @@ python main.py document.pdf --persist-dir ./my_vector_db
 # Custom chunking parameters
 python main.py document.pdf --chunk-size 1500 --chunk-overlap 300
 ```
-
-### Interactive Commands
-
-Once running, you can use these commands:
-
-- **Ask questions**: Just type your question naturally
-- **`summary`**: Show conversation summary and recent history
-- **`stats`**: Show detailed conversation statistics
-- **`info`**: Show system configuration and status
-- **`clear`**: Clear conversation history (keeps document index)
-- **`help`**: Show available commands
-- **`quit/exit/bye`**: Exit with conversation summary
 
 ## Configuration
 
