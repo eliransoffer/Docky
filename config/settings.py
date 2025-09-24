@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from dataclasses import dataclass
 from typing import Optional
+import tempfile
 
 # Load environment variables
 load_dotenv()
@@ -34,6 +35,9 @@ class RAGConfig:
         # Load API key from environment if not provided
         if self.google_api_key is None:
             self.google_api_key = os.getenv("GOOGLE_API_KEY")
+        
+        if self.persist_directory == "./chroma_db":
+            self.persist_directory = os.path.join(tempfile.gettempdir(), "chroma_db")
         
         # Validate required settings
         if not self.google_api_key:
