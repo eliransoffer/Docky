@@ -17,8 +17,8 @@ class RAGWithMemory:
         self.config = config
         
         # Initialize components
-        self.embeddings = GoogleGenerativeAIEmbeddings(model=config.embedding_model)
-        self.llm = ChatGoogleGenerativeAI(model=config.llm_model)
+        self.embeddings = GoogleGenerativeAIEmbeddings(model=config.embedding_model, google_api_key=config.google_api_key)
+        self.llm = ChatGoogleGenerativeAI(model=config.llm_model, google_api_key=config.google_api_key)
         
         self.document_loader = DocumentLoader(
             chunk_size=config.chunk_size,

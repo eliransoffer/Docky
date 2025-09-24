@@ -39,6 +39,17 @@ class RAGConfig:
         if not self.google_api_key:
             raise ValueError("GOOGLE_API_KEY environment variable is required")
 
-def get_config() -> RAGConfig:
-    """Get default configuration"""
-    return RAGConfig()
+def validate_config(api_key: str = None) -> bool:
+    """Validate if config can be created with given API key"""
+    try:
+        RAGConfig(google_api_key=api_key)
+        return True
+    except ValueError:
+        return False
+
+def get_config_or_none(api_key: str = None) -> Optional[RAGConfig]:
+    """Get config if valid, otherwise return None"""
+    try:
+        return RAGConfig(google_api_key=api_key)
+    except ValueError:
+        return None

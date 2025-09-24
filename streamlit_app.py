@@ -7,7 +7,7 @@ import asyncio
 import threading
 import hashlib
 
-from config.settings import RAGConfig
+from config.settings import RAGConfig, get_config_or_none
 from core.rag_system import RAGWithMemory
 
 # Page config
@@ -91,6 +91,8 @@ def get_file_hash(uploaded_file):
 
 def initialize_session_state():
     """Initialize session state variables"""
+    if "config" not in st.session_state:
+        st.session_state.config = None
     if "rag_system" not in st.session_state:
         st.session_state.rag_system = None
     if "messages" not in st.session_state:
@@ -215,20 +217,21 @@ def main():
     
     # Get API key from user
     api_key = st.text_input("Enter Google API Key:", type="password")
-
-# Create config with the API key
+    
+    # Validate and store config when API key is provided
     if api_key:
-        try:
-            config = RAGConfig(google_api_key=api_key)
-            st.success("API loaded successfully!")
-        
-            # Now you can use your config
-            # your_rag_system = SomeRAGClass(config)
-        
-        except ValueError as e:
-            st.error(f"Error: {e}")
-    else:
-        st.info("Please enter your Google API key to continue")
+        config = get_config_or_none(api_key)
+        if config:
+            st.session_state.config = config
+            st.success("✅ API key validated and configuration loaded!")
+        else:
+            st.error("❌ Invalid API key")
+            st.session_state.config = None
+    
+    # Only proceed if config is valid
+    if not st.session_state.config:
+        st.warning("⚠️ Please provide a valid API key to continue")
+        st.stop()  # This stops execution - nothing below runs
         
     st.markdown("*Upload a PDF and chat with your document while I remember our conversation!*")
     
@@ -351,6 +354,7 @@ def main():
                 try:
                     # Create config
                     config = RAGConfig(
+                        google_api_key=st.session_state.config.google_api_key,
                         memory_tokens=memory_tokens,
                         chunk_size=chunk_size,
                         chunk_overlap=chunk_overlap,
