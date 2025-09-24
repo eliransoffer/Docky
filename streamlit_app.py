@@ -302,6 +302,15 @@ def main():
                     st.success("✅ Complete system reset!")
                     st.rerun()
                 except Exception as e:
+                    if "readonly database" in str(e):
+                        # Force reset session state even if database cleanup failed
+                        st.session_state.rag_system = None
+                        st.session_state.messages = []
+                        st.session_state.document_processed = False
+                        st.session_state.current_document_hash = None
+                        st.session_state.current_document_name = None
+                        st.success("✅ App state reset! (Upload a new document to continue)")
+                        st.rerun()
                     st.error(f"❌ Reset failed: {str(e)}")
                     st.info("💡 Try refreshing the page if issues persist")
         
