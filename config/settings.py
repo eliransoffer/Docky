@@ -31,17 +31,27 @@ class RAGConfig:
     # API keys (from environment)
     google_api_key: Optional[str] = None
     
-    def __post_init__(self):
-        # Load API key from environment if not provided
-        if self.google_api_key is None:
-            self.google_api_key = os.getenv("GOOGLE_API_KEY")
-        
-        if self.persist_directory == "./chroma_db":
-            self.persist_directory = os.path.join(tempfile.gettempdir(), "chroma_db")
-        
-        # Validate required settings
-        if not self.google_api_key:
-            raise ValueError("GOOGLE_API_KEY environment variable is required")
+def __post_init__(self):
+    # Load API key from environment if not provided
+    if self.google_api_key is None:
+        self.google_api_key = os.getenv("GOOGLE_API_KEY")
+    
+    # Force writable database path for deployment
+    import tempfile
+    import os
+    
+    temp_dir = tempfile.gettempdir()
+    self.persist_directory = os.path.join(temp_dir, "chroma_db")
+    
+    # Try to create directory, fallback to memory if it fails
+    try:
+        os.makedirs(self.persist_directory, exist_ok=True)
+    except Exception:
+        self.persist_directory = ":memory:"
+    
+    # Validate required settings
+    if not self.google_api_key:
+        raise ValueError("GOOGLE_API_KEY is required")
 
 def validate_config(api_key: str = None) -> bool:
     """Validate if config can be created with given API key"""
