@@ -212,6 +212,24 @@ def main():
     
     # Header
     st.title("Docky chat")
+    
+    # Get API key from user
+    api_key = st.text_input("Enter Google API Key:", type="password")
+
+# Create config with the API key
+    if api_key:
+        try:
+            config = RAGConfig(google_api_key=api_key)
+            st.success("API loaded successfully!")
+        
+            # Now you can use your config
+            # your_rag_system = SomeRAGClass(config)
+        
+        except ValueError as e:
+            st.error(f"Error: {e}")
+    else:
+        st.info("Please enter your Google API key to continue")
+        
     st.markdown("*Upload a PDF and chat with your document while I remember our conversation!*")
     
     # Sidebar configuration
